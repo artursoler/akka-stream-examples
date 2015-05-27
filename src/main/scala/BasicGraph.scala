@@ -3,7 +3,7 @@ import akka.stream.ActorFlowMaterializer
 import akka.stream.scaladsl._
 
 object BasicGraph extends App {
-  implicit val system = ActorSystem("SimpleStream")
+  implicit val system = ActorSystem("BasicGraph")
   implicit val materializer = ActorFlowMaterializer()
   import system.dispatcher
 

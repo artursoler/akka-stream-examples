@@ -2,8 +2,8 @@ import akka.actor.ActorSystem
 import akka.stream.ActorFlowMaterializer
 import akka.stream.scaladsl.{Sink, Source}
 
-object StremsOfStreams extends App {
-  implicit val system = ActorSystem("SimpleStream")
+object StreamOfStreams extends App {
+  implicit val system = ActorSystem("StreamOfStreams")
   implicit val materializer = ActorFlowMaterializer()
   import system.dispatcher
 
