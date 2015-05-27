@@ -16,16 +16,13 @@ object CyclicGraph extends App {
 
       val zip = builder.add(Zip[Int, Int]())
       val broadcast = builder.add(Broadcast[Int](2))
-      val concat = builder.add(Concat[Int]())
 
       val logger = Flow[(Int, Int)].map { x => println(x); x }
       val adapter = Flow[(Int, Int)].map(_._1)
 
       in ~> zip.in0
             zip.out ~> logger ~> adapter ~> broadcast ~> sink
-                                            broadcast ~> concat.in(1)
-                                     Source.single(0) ~> concat.in(0)
-                                                         concat.out ~> zip.in1
+                                            broadcast ~> zip.in1
   }
 
   g.run().onComplete(_ => system.shutdown())
