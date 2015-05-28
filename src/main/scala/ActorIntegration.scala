@@ -45,8 +45,7 @@ object ActorIntegration extends App {
   val jobManagerSource = Source.actorPublisher[JobManager.Job](JobManager.props)
   val ref = Flow[JobManager.Job]
     .map(_.payload.toUpperCase)
-    .map { elem => println(elem); elem }
-    .to(Sink.ignore)
+    .to(Sink.foreach(println))
     .runWith(jobManagerSource)
 
   ref ! JobManager.Job("a")
