@@ -17,8 +17,10 @@ object TcpStream extends App {
     println(s"New connection from: ${connection.remoteAddress}")
 
     val echo = Flow[ByteString]
-      .transform(() => Parser.parseLines("\n", maximumLineBytes = 256))
-      .map(_ + "\n")
+      .transform(() => Parser.parseLines("\r\n", maximumLineBytes = 256))
+      .map(_.toInt)
+      .scan(0)(_ + _)
+      .map(_.toString + "\n")
       .map(ByteString(_))
 
     connection.handleWith(echo)
