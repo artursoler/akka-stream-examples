@@ -17,10 +17,10 @@ object BasicGraph extends App {
       val bcast = builder.add(Broadcast[Int](2))
       val merge = builder.add(Merge[Int](2))
 
-      val f1, f2, f3, f4 = Flow[Int].map(_ + 10)
+      val f = Flow[Int].map(_ + 10)
 
-      in ~> f1 ~> bcast ~> f2 ~> merge ~> f3 ~> sink
-                  bcast ~> f4 ~> merge
+      in ~> f ~> bcast ~> f ~> merge ~> f ~> sink
+                 bcast ~> f ~> merge
   }
 
   g.run().onComplete(_ => system.shutdown())
